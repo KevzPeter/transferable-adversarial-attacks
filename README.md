@@ -1,7 +1,5 @@
 # Jailbreaking Deep Models: Transferable Adversarial Attacks
 
----
-
 ### ✅ Task 1: Baseline Evaluation
 
 - Evaluate ResNet-34 on the provided 500-image dataset
