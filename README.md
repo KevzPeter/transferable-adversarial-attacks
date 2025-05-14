@@ -12,7 +12,7 @@ This project investigates the adversarial vulnerability of deep image classifier
 | ---------------- | ------------------------------------------- |
 | **FGSM**         | One-step L∞-bounded gradient sign method    |
 | **PGD**          | Iterative version of FGSM with projection   |
-| **Patch Attack** | Targeted attack localized to a 64×64 region |
+| **Patch Attack** | Targeted attack localized to a 32×32 region |
 
 Each attack is verified to comply with an L∞ constraint (`ε`), and adversarial examples are saved as `.png` files for transferability evaluation.
 
