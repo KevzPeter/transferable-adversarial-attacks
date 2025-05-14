@@ -1,58 +1,42 @@
-# Jailbreaking Deep Models: Transferable Adversarial Attacks
+# 🧠 Jailbreaking Deep Models: Transferable Adversarial Attacks
 
-### ✅ Task 1: Baseline Evaluation
-
-- Evaluate ResNet-34 on the provided 500-image dataset
-- Report Top-1 and Top-5 accuracy
-
-### ✅ Task 2: FGSM (L∞ Attack)
-
-- Implement Fast Gradient Sign Method (ε=0.02)
-- Visualize perturbations
-- Save perturbed images in `AdversarialTestSet1/`
-
-### ✅ Task 3: Improved Attack (PGD)
-
-- Iterative gradient sign method (PGD, 10 steps)
-- Greater accuracy drop than FGSM
-- Save images in `AdversarialTestSet2/`
-
-### ✅ Task 4: Targeted Patch Attack
-
-- Modify only a 32×32 patch in each image
-- Use higher ε (0.3) for effectiveness
-- Save images in `AdversarialTestSet3/`
-
-### ✅ Task 5: Transferability
-
-- Evaluate all three attack sets across:
-  - DenseNet-121
-  - MobileNetV3-Large
-  - EfficientNet-B0
-- Present results with relative accuracy drop
+This project investigates the adversarial vulnerability of deep image classifiers and the transferability of adversarial examples across modern neural architectures. We implement and evaluate several attack strategies on a pre-trained ResNet-34 model and test their effectiveness on DenseNet-121, MobileNetV3, and EfficientNet-B0 using a subset of the ImageNet-1K dataset.
 
 ---
 
-## 📊 Results Summary
+---
 
-| Model               | Original | FGSM           | PGD            | Patch (Targeted) |
-| ------------------- | -------- | -------------- | -------------- | ---------------- |
-| **DenseNet-121**    | 74.8%    | 38.6% (-48.4%) | 36.4% (-51.3%) | 39.6% (-47.0%)   |
-| **MobileNetV3**     | 83.8%    | 40.4% (-51.8%) | 40.8% (-51.3%) | 40.8% (-51.3%)   |
-| **EfficientNet-B0** | 83.0%    | 41.2% (-50.4%) | 40.8% (-50.8%) | 44.0% (-47.0%)   |
+## 🔍 Attacks Implemented
 
-_All accuracy values refer to Top-1. Full tables in the notebook._
+| Attack Type      | Description                                 |
+| ---------------- | ------------------------------------------- |
+| **FGSM**         | One-step L∞-bounded gradient sign method    |
+| **PGD**          | Iterative version of FGSM with projection   |
+| **Patch Attack** | Targeted attack localized to a 64×64 region |
+
+Each attack is verified to comply with an L∞ constraint (`ε`), and adversarial examples are saved as `.png` files for transferability evaluation.
 
 ---
 
-## 📌 Requirements
+## 📊 Final Metrics
 
-```bash
-torch >= 2.0
-torchvision >= 0.15
-numpy
-matplotlib
-Pillow
-tqdm
-pandas
-```
+### ✅ ResNet-34 Accuracy
+
+| Attack       | Top-1 (%) | Top-5 (%) |
+| ------------ | --------- | --------- |
+| Clean        | 76.00     | 94.20     |
+| FGSM         | 6.00      | 35.40     |
+| PGD          | 1.20      | 34.20     |
+| Patch Attack | 35.40     | 68.40     |
+
+### 🔁 Transferability (Top-1 / Top-5)
+
+| Model           | FGSM          | PGD           | Patch         |
+| --------------- | ------------- | ------------- | ------------- |
+| DenseNet-121    | 70.80 / 92.20 | 72.20 / 92.20 | 66.40 / 87.60 |
+| MobileNetV3     | 79.40 / 96.40 | 80.80 / 96.40 | 70.60 / 91.60 |
+| EfficientNet-B0 | 79.40 / 96.40 | 79.80 / 96.40 | 75.20 / 93.80 |
+
+> 📌 **Observation**: Patch attacks show the strongest transferability, especially to MobileNetV3.
+
+---
